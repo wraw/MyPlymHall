@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    
+    <head>
+        <title>My PlymHall</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="lib/jquery-1.6.4.js"></script>
+        <script src="lib/jquery.mobile-1.1.0.js"></script>
+        <link href="src/css/jquery.mobile.structure-1.1.0.css" rel="stylesheet"
+        />
+        <link href="src/css/jquery.mobile.theme-1.1.0.css" rel="stylesheet" />
+    </head>
+    
+    <body>
+        <div data-role="page" id="start">
+            <div data-role="header" data-theme="b">
+                <h1>Welcome to MyPlymHall</h1>
+            </div>
+				<div data-role="content">
+                <img src="images/Logo2.png" width="400" height="100" style="display: block; margin: 0 auto"
+                />
+                <h4>Please login or register to our rating system:</h4>
+                <div data-role="fieldcontain">
+                    <label for="text1">Username:</label>
+                    <input type="text" id="text1" data-theme="b" />
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="text2">Password:</label>
+                    <input type="text" id="text2" />
+                </div>
+                <a data-role="button" id="login" a href="#menu">Login</a>
+                <a data-role="button" id="Register" a herf="#register" >Register</a>
+            </div>
+        </div>
+        <div data-role="page" id="menu">
+            <div data-role="header" data-theme="b">
+                <h1>Menu</h1>
+            </div>
+            <div data-role="content">
+                <h4>Welcome to MyPlymHall, place where you can rate your hall and add a review. Please
+                    choose one of the following options:</h4>
+                <div data-role="controlgroup">
+                    <a data-role="button" id="addrev" data-theme="e" a href="#review">Add a review</a>
+                    <a data-role="button" id="searchbycat" data-theme="b" a href="#sbycat">Search by categories</a>
+                    <a data-role="button" id="allhallsbutton" data-theme="b" a href="#allhalls">See all student halls</a>
+                    <a data-role="button" id="get_location" a href="#">Geolocation</a></div>
+                <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    // Wait for device API libraries to load
+    //
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    var watchID = null;
+
+    // device APIs are available
+    //
+    function onDeviceReady() {
+        // Get the most accurate position updates available on the
+        // device.
+        var options = { enableHighAccuracy: true };
+        watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
+    }
+
+    // onSuccess Geolocation
+    //
+    function onSuccess(position) {
+        var element = document.getElementById('geolocation');
+        element.innerHTML = 'Latitude: '  + position.coords.latitude      + '<br />' +
+                            'Longitude: ' + position.coords.longitude     + '<br />' +
+                            '<hr />'      + element.innerHTML;
+    }
+
+    // clear the watch that was started earlier
+    //
+    function clearWatch() {
+        if (watchID != null) {
+            navigator.geolocation.clearWatch(watchID);
+            watchID = null;
+        }
+    }
+
+        // onError Callback receives a PositionError object
+        //
+        function onError(error) {
+          alert('code: '    + error.code    + '\n' +
+                'message: ' + error.message + '\n');
+        }
+    </script>
+                 <button onclick="clearWatch();">Clear Watch</button>
+            </div>
+        </div>
+        <div data-role="page" id="review">
+            <div data-role="header" data-theme="b">
+                <h1>Add a review</h1>
+            </div>
+            <div data-role="content">
+                <div data-role="fieldcontain">
+                     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    var pictureSource;   // picture source
+    var destinationType; // sets the format of returned value
+
+    // Wait for device API libraries to load
+    //
+    document.addEventListener("deviceready",onDeviceReady,false);
+
+    // device APIs are available
+    //
+    function onDeviceReady() {
+        pictureSource=navigator.camera.PictureSourceType;
+        destinationType=navigator.camera.DestinationType;
+    }
+
+    // Called when a photo is successfully retrieved
+    //
+    function onPhotoDataSuccess(imageData) {
+      // Uncomment to view the base64-encoded image data
+      // console.log(imageData);
+
+      // Get image handle
+      //
+      var smallImage = document.getElementById('smallImage');
+
+      // Unhide image elements
+      //
+      smallImage.style.display = 'block';
+
+      // Show the captured photo
+      // The in-line CSS rules are used to resize the image
+      //
+      smallImage.src = "data:image/jpeg;base64," + imageData;
+    }
+
+    // Called when a photo is successfully retrieved
+    //
+    function onPhotoURISuccess(imageURI) {
+      // Uncomment to view the image file URI
+      // console.log(imageURI);
+
+      // Get image handle
+      //
+      var largeImage = document.getElementById('largeImage');
+
+      // Unhide image elements
+      //
+      largeImage.style.display = 'block';
+
+      // Show the captured photo
+      // The in-line CSS rules are used to resize the image
+      //
+      largeImage.src = imageURI;
+    }
+
+    // A button will call this function
+    //
+    function capturePhoto() {
+      // Take picture using device camera and retrieve image as base64-encoded string
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
+        destinationType: destinationType.DATA_URL });
+    }
+
+    // A button will call this function
+    //
+    function capturePhotoEdit() {
+      // Take picture using device camera, allow edit, and retrieve image as base64-encoded string
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
+        destinationType: destinationType.DATA_URL });
+    }
+
+    // A button will call this function
+    //
+    function getPhoto(source) {
+      // Retrieve image file location from specified source
+      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
+        destinationType: destinationType.FILE_URI,
+        sourceType: source });
+    }
+
+    // Called if something bad happens.
+    //
+    function onFail(message) {
+      alert('Failed because: ' + message);
+    }
+
+    </script>
+                      <button onclick="capturePhoto();">Capture Photo</button> <br>
+    <button onclick="capturePhotoEdit();">Capture Editable Photo</button> <br>
+    <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
+    <button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);">From Photo Album</button><br>
+    <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+    <img style="display:none;" id="largeImage" src="" />
+                    <label for="text3">Title your review:</label>
+                    <input type="text" id="text3" />
+                </div>
+                <span>Choose hall of residence:</span>
+                <select data-native-menu="false" id="halllist">
+                    <option value="1">Alexandra Works</option>
+                    <option value="2">St Teresa House &amp; St Thomas Court</option>
+                    <option value="3">Central Park Towers</option>
+                    <option value="4">Forbisher House</option>
+                    <option value="5">Radnor Hall</option>
+                    <option value="6">Pilgrim Hall</option>
+                    <option value="7">Robbins Hall</option>
+                    <option value="8">Gilwell Hall</option>
+                    <option value="9">Discovery Heights</option>
+                    <option value="10">Mary Newman</option>
+                    <option value="11">Francis Drake</option>
+                </select>
+                <textarea></textarea>
+                <div data-role="fieldcontain" id="slider2">
+                    <label for="slider2-range">People rate</label>
+                    <input type="range" id="slider2-range" value="0" min="0" max="5"
+                    step="1" data-theme="c" />
+                </div>
+                <div data-role="fieldcontain" id="slider3">
+                    <label for="slider3-range">RA rate</label>
+                    <input type="range" id="slider3-range" value="0" min="0" max="5"
+                    step="1" data-theme="c" />
+                </div>
+                <div data-role="fieldcontain" id="slider4">
+                    <label for="slider4-range">Party rate</label>
+                    <input type="range" id="slider4-range" value="0" min="0" max="5"
+                    step="1" data-theme="c" />
+                </div>
+                <div data-role="fieldcontain" id="slider1">
+                    <label for="slider1-range">Overall rate</label>
+                    <input type="range" id="slider1-range" value="0" min="0" max="5"
+                    step="1" data-theme="c" />
+                </div>
+                <a data-role="button">Submit</a>
+            </div>
+        </div>
+        <div data-role="page" id="register">
+            <div data-role="header" data-theme="b">
+                <h1>Register</h1>
+            </div>
+            <div data-role="content">
+                <div data-role="fieldcontain">
+                    <label for="text4">Choose your name:</label>
+                    <input type="text" id="text4" data-theme="b" />
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="pass_reg">Password:</label>
+                    <input type="text" id="pass_reg" />
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="text5">Email:</label>
+                    <input type="text" id="text5" />
+                </div>
+                <a data-role="button" a href "#start">Submit</a>
+            </div>
+        </div>
+        <div data-role="page" id="sbycat">
+            <div data-role="header" data-theme="b">
+                <h1>Search by category</h1>
+            </div>
+            <div data-role="content">
+                <a data-role="button" id="less5minbutton">Less than 5 minutes</a>
+                <a data-role="button" id="5minbutton">5 minutes</a>
+                <a data-role="button" id="10minbutton">10 minutes</a>
+                <a data-role="button" id="15minbutton">15 minutes</a>
+                <a data-role="button" id="20minbutton">20 minutes</a>
+            </div>
+        </div>
+        <div data-role="page" id="less5min">
+            <div data-role="header" data-theme="b">
+                <h1>less than 5 minutes from Uni</h1>
+            </div>
+            <div data-role="content">
+                <select data-native-menu="false">
+                    <option value="1">Discovery Heights</option>
+                    <option value="2">Mary Newman</option>
+                    <option value="3">Francis Drake</option>
+                </select>
+            </div>
+        </div>
+        <div data-role="page" id="5min">
+            <div data-role="header" data-theme="b">
+                <h1>5 minutes from Uni</h1>
+            </div>
+            <div data-role="content">
+                <select data-native-menu="false">
+                    <option value="1">Pilgrim Hall</option>
+                    <option value="2">Robbins Hall</option>
+                    <option value="3">Gillwell Hall</option>
+                </select>
+            </div>
+        </div>
+        <div data-role="page" id="10min">
+            <div data-role="header" data-theme="b">
+                <h1>10 minutes from Uni</h1>
+            </div>
+            <div data-role="content">
+                <select data-native-menu="false">
+                    <option value="1">Central Park Towers</option>
+                    <option value="2">Forbisher House</option>
+                    <option value="3">Radnor Hall</option>
+                </select>
+            </div>
+        </div>
+        <div data-role="page" id="15min">
+            <div data-role="header" data-theme="b">
+                <h1>15 minutes from Uni</h1>
+            </div>
+            <div data-role="content">
+                <a data-role="button">St Teresa &amp; St Thomas Court</a>
+            </div>
+        </div>
+        <div data-role="page" id="20min">
+            <div data-role="header" data-theme="b">
+                <h1>Header</h1>
+            </div>
+            <div data-role="content">
+                <a data-role="button">Alexandra Works</a>
+            </div>
+        </div>
+        <div data-role="page" id="reviews">
+            <div data-role="header" data-theme="b">
+                <h1>Reviews</h1>
+            </div>
+            <div data-role="content"></div>
+        </div>
+        <div data-role="page" id="allhalls">
+            <div data-role="header" data-theme="b">
+                <h1>All Halls</h1>
+            </div>
+            <div data-role="content">
+                <span>Choose hall of residence:</span>
+                <select data-native-menu="false" id="halllist">
+                    <option value="1">Alexandra Works</option>
+                    <option value="2">St Teresa House &amp; St Thomas Court</option>
+                    <option value="3">Central Park Towers</option>
+                    <option value="4">Forbisher House</option>
+                    <option value="5">Radnor Hall</option>
+                    <option value="6">Pilgrim Hall</option>
+                    <option value="7">Robbins Hall</option>
+                    <option value="8">Gilwell Hall</option>
+                    <option value="9">Discovery Heights</option>
+                    <option value="10">Mary Newman</option>
+                    <option value="11">Francis Drake</option>
+                </select>
+                <a data-role="button" data-theme="c">Submit</a>
+            </div>
+        </div>
+    </body>
+
+</html>

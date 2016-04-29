@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    
+    <head>
+        <title>MyPlymHall</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="lib/jquery-1.6.4.js"></script>
+        <script src="lib/jquery.mobile-1.1.0.js"></script>
+        <link href="src/css/jquery.mobile.structure-1.1.0.css" rel="stylesheet"
+        />
+        <link href="src/css/jquery.mobile.theme-1.1.0.css" rel="stylesheet" />
+        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8"></script>  
+    <script src="js/camera.js"></script>
+    <script src="js/addreview.js"></script>
+    <body onload="repopulateList()">
+    </head>
+    
+    <body>
+        <div data-role="page" id="start">
+            <div data-role="header" data-theme="b">
+                <h1>Welcome to MyPlymHall</h1>
+            </div>
+            <div data-role="content">
+                <img src="images/Logo2.png" width="400" height="100" style="display: block; margin: 0 auto"
+                />
+                <h4>Please login or register to our rating system:</h4>
+                <div data-role="fieldcontain">
+                    <label for="text1">Username:</label>
+                    <input type="text" id="text1" data-theme="b" />
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="text2">Password:</label>
+                    <input type="text" id="text2" />
+                </div>
+                <a data-role="button" id="login" href="#menu">Login</a>
+                <a data-role="button" id="Register" href="#register">Register</a>
+            </div>
+        </div>
+        <div data-role="page" id="menu">
+            <div data-role="header" data-theme="b">
+                <h1>Menu</h1>
+            </div>
+            <div data-role="content">
+                <h4>Welcome to MyPlymHall, place where you can rate your hall and add a review. Please
+                    choose one of the following options:</h4>
+                <div data-role="controlgroup" id="menubuttons">
+                    <a data-role="button" id="addrev" data-theme="e" href="#review">Add a review</a>
+                    <a data-role="button" id="searchbycat" data-theme="b" href="#sbycat">Search by categories</a>
+                    <a data-role="button" id="allhallsbutton" data-theme="b" href="#allhalls">See all student halls</a>
+                           <a data-role="button" id="allhallsbutton" data-theme="c" href="#rreviews">See recent reviews</a>
+                                    <img src="images/tlo.png" width="400" height="100" style="display: block; margin: 0 auto" />
+
+                </div>
+            </div>
+        </div>
+        <div data-role="page" id="review">
+            <div data-role="header" data-theme="b">
+                <h1>Add a review</h1>
+            </div>
+            <div data-role="content">
+                <div data-role="fieldcontain">
+                    <label for="text3">Title your review:</label>
+                    <input type="text" id="text3" />
+                </div>
+                <span>Choose hall of residence:</span>
+                <select data-native-menu="false" id="halllist">
+                    <option value="1">Alexandra Works</option>
+                    <option value="2">St Teresa House &amp; St Thomas Court</option>
+                    <option value="3">Central Park Towers</option>
+                    <option value="4">Forbisher House</option>
+                    <option value="5">Radnor Hall</option>
+                    <option value="6">Pilgrim Hall</option>
+                    <option value="7">Robbins Hall</option>
+                    <option value="8">Gilwell Hall</option>
+                    <option value="9">Discovery Heights</option>
+                    <option value="10">Mary Newman</option>
+                    <option value="11">Francis Drake</option>
+                </select>
+                <textarea></textarea>
+                <div data-role="fieldcontain" id="slider2">
+                    <label for="slider2-range">People rate</label>
+                    <input type="range" id="slider2-range" value="0" min="0" max="5"
+                    step="1" data-theme="c" data-highlight="true" />
+                </div>
+                <div data-role="fieldcontain" id="slider3">
+                    <label for="slider3-range">RA rate</label>
+                    <input type="range" id="slider3-range" value="0" min="0" max="5"
+                    step="1" data-theme="c" data-highlight="true" />
+                </div>
+                <div data-role="fieldcontain" id="slider4">
+                    <label for="slider4-range">Party rate</label>
+                    <input type="range" id="slider4-range" value="0" min="0" max="5"
+                    step="1" data-theme="c" data-highlight="true" />
+                </div>
+                <div data-role="fieldcontain" id="slider1">
+                    <label for="slider1-range">Overall rate</label>
+                    <input type="range" id="slider1-range" value="0" min="0" max="5"
+                    step="1" data-theme="c" data-highlight="true" />
+                </div>
+                <button onclick="capturePhoto();" data-theme="b">Capture Photo</button> <br>
+    <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);" data-theme="b">From Photo Library</button><br>
+    <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+    <img style="display:none;" id="largeImage" src="" />
+                <a href="#reviews" data-role="button" onclick="addToReviews()">Submit</a>
+                <img src="images/tlo.png" width="400" height="100" style="display: block; margin: 0 auto" />
+            </div>
+        </div>
+        <div data-role="page" id="register">
+            <div data-role="header" data-theme="b">
+                <h1>Register</h1>
+            </div>
+            <div data-role="content">
+                <div data-role="fieldcontain">
+                    <label for="text4">Choose your name:</label>
+                    <input type="text" id="text4" data-theme="b" />
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="pass_reg">Password:</label>
+                    <input type="text" id="pass_reg" />
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="text5">Email:</label>
+                    <input type="text" id="text5" />
+                </div>
+                <a data-role="button" href="#menu">Submit</a>
+            </div>
+        </div>
+        <div data-role="page" id="sbycat">
+            <div data-role="header" data-theme="b">
+                <h1>Search by category</h1>
+            </div>
+            <div data-role="content">
+                <a data-role="button" id="less5minbutton" href="#less5min">Less than 5 minutes</a>
+                <a data-role="button" id="5minbutton" href="#5min">5 minutes</a>
+                <a data-role="button" id="10minbutton" href="#10min">10 minutes</a>
+                <a data-role="button" id="15minbutton" href="#15min">15 minutes</a>
+                <a data-role="button" id="20minbutton" href="#20min">20 minutes</a>
+                                <img src="images/tlo.png" width="400" height="100" style="display: block; margin: 0 auto" />
+
+            </div>
+        </div>
+        <div data-role="page" id="less5min">
+            <div data-role="header" data-theme="b">
+                <h1>less than 5 minutes from Uni</h1>
+            </div>
+            <div data-role="content">
+                <select data-native-menu="false">
+                    <option value="1">Discovery Heights</option>
+                    <option value="2">Mary Newman</option>
+                    <option value="3">Francis Drake</option>
+                </select>
+            </div>
+        </div>
+        <div data-role="page" id="5min">
+            <div data-role="header" data-theme="b">
+                <h1>5 minutes from Uni</h1>
+            </div>
+            <div data-role="content">
+                <select data-native-menu="false">
+                    <option value="1">Pilgrim Hall</option>
+                    <option value="2">Robbins Hall</option>
+                    <option value="3">Gillwell Hall</option>
+                </select>
+            </div>
+        </div>
+        <div data-role="page" id="10min">
+            <div data-role="header" data-theme="b">
+                <h1>10 minutes from Uni</h1>
+            </div>
+            <div data-role="content">
+                <select data-native-menu="false">
+                    <option value="1">Central Park Towers</option>
+                    <option value="2">Forbisher House</option>
+                    <option value="3">Radnor Hall</option>
+                </select>
+            </div>
+        </div>
+        <div data-role="page" id="15min">
+            <div data-role="header" data-theme="b">
+                <h1>15 minutes from Uni</h1>
+            </div>
+            <div data-role="content">
+                <a data-role="button">St Teresa &amp; St Thomas Court</a>
+            </div>
+        </div>
+        <div data-role="page" id="20min">
+            <div data-role="header" data-theme="b">
+                <h1>Header</h1>
+            </div>
+            <div data-role="content">
+                <a data-role="button">Alexandra Works</a>
+            </div>
+        </div>
+        <div data-role="page" id="rreviews">
+            <div data-role="header" data-theme="b">
+                <h1>Recent Reviews</h1>
+            </div>
+            <div data-role="content"></div>
+        </div>
+        <div data-role="page" id="allhalls">
+            <div data-role="header" data-theme="b">
+                <h1>All Halls</h1>
+            </div>
+            <div data-role="content">
+                <span>Choose hall of residence:</span>
+                <select data-native-menu="false" id="halllist">
+                    <option value="1">Alexandra Works</option>
+                    <option value="2">St Teresa House &amp; St Thomas Court</option>
+                    <option value="3">Central Park Towers</option>
+                    <option value="4">Forbisher House</option>
+                    <option value="5">Radnor Hall</option>
+                    <option value="6">Pilgrim Hall</option>
+                    <option value="7">Robbins Hall</option>
+                    <option value="8">Gilwell Hall</option>
+                    <option value="9">Discovery Heights</option>
+                    <option value="10">Mary Newman</option>
+                    <option value="11">Francis Drake</option>
+                </select>
+                        <div id="map">
+                <a data-role="button" data-theme="c">Pick and see reviews</a>
+                            <br>
+                             <a data-role="button" href="#" id="get_location">Get location</a>
+                                    <script src="js/geolocation.js"></script>
+                <div id="map"> 
+                <iframe id="google_map" width="800" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk?output=embed"></iframe></div>
+                                <img src="images/tlo.png" width="400" height="100" style="display: block; margin: 0 auto" />
+
+            </div>
+        </div>
+    </body>
+
+</html>
